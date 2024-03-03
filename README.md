@@ -1,11 +1,14 @@
 # Projeto da aula de Microsserviços
 
+
 # Proposta
 Projeta um desenho arquitetural de microsserviços para um e-commerce, identificando os contextos delimitados (bounded contexts) utilizando modelo C4, e explicando como os microsserviços conversarão entre si.
 
+
 # 🛠️ Abrir e rodar o projeto
 
-**Apresente as instruções necessárias para abrir e executar o projeto**
+> :construction: Projeto em construção :construction:
+
 
 # :hammer: Funcionalidades do projeto
 Realizar o acesso do User (usuário) ao um ecommerce, no qual fará o seu cadastro e seguirá para tela de compra de produtos.
