@@ -1,0 +1,2 @@
+insert into tbuser (name, username, email, password, role, id_company) values('Idinaldo Teteo 1', 'idinaldo1', 'idinaldoteteo@gmail.com', '123456', 1 , 1);
+insert into tbuser (name, username, email, password, role, id_company) values('Idinaldo Teteo 2', 'idinaldo2', 'idinaldo.junior@al.infnet.edu.br', '123456', 1 , null);
