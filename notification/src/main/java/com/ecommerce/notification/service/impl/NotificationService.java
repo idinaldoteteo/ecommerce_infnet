@@ -73,9 +73,6 @@ public class NotificationService implements INotificationService {
 	@Override
 	public void sendEmail(Notification notification) {
 		
-		//Jogar na fila de produtos e pegar o id		
-		int orderId = 100;
-		
 		String response = webClient.get()
 										.uri("/user/" + notification.getUser_id())
 										.retrieve()
@@ -84,8 +81,9 @@ public class NotificationService implements INotificationService {
 		
 		Map<String, Object> map = convertToObject(response);		
 		String email = map.get("email").toString();		
-		String userName = map.get("name").toString();		
-		String body = MessageFormat.format("Parabéns {0} seu pedido {1} foi finalizado e está em processo de coleta da transportadora",userName, orderId);
+		String userName = map.get("name").toString();
+		
+		String body = MessageFormat.format("Parabéns {0} seu pedido {1} foi finalizado e está em processo de coleta da transportadora",userName, notification.getOrder_id());
 		
 		sendEmail(body, email, notification.getSubject());		
 	}
@@ -107,8 +105,15 @@ public class NotificationService implements INotificationService {
 	@Override
 	public void sendEmail(String notification) {
 		
-		log.info("mensagem recebida");
-		
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			Notification resultNotification = mapper.readValue(notification, Notification.class);
+			
+			sendEmail(resultNotification);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
 	}
 
 }
