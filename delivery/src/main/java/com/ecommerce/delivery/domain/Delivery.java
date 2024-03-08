@@ -29,6 +29,8 @@ public class Delivery {
 	
 	private Long orderId;
 	
+	private Long userId;
+	
 	private String transportName;
 	
 	private LocalDateTime confirmationDate;
