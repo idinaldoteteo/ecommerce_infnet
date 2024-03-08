@@ -13,6 +13,7 @@ import com.ecommerce.order.domain.DeliveryConfirmation;
 import com.ecommerce.order.domain.NotificationMessage;
 import com.ecommerce.order.domain.Order;
 import com.ecommerce.order.domain.PaymentConfirmation;
+import com.ecommerce.order.infrastructure.impl.OrderWebClient;
 import com.ecommerce.order.repository.IOrderRepository;
 import com.ecommerce.order.service.IOrderService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,25 +47,25 @@ public class OrderService extends GenericService<Order, Long, IOrderRepository> 
 
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
-
-	@Override
-	public Map<String, Object> convertToObject(String jsonS) {
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			Map<String, Object> map = mapper.readValue(jsonS, Map.class);
-			
-			return map;
-			
-		} catch (JsonProcessingException e) {
-			return null;		
-		}
-	}
+	
+	@Autowired	
+	private OrderWebClient orderWebClient;
 	
 	@Override
 	public void createOrder(Order order) {
 		
-		orderRepository.save(order);
+		//Buscar o nome do cliente no microsserviço User
+		Map<String, Object> userMap = orderWebClient.getUserMap(order.getUser_id());
+		String userName = userMap.get("name").toString();		
+		order.setClientName(userName);
 		
+		//Buscar o nome do produto no microsserviço product
+		Map<String, Object> productMap = orderWebClient.getProductMap(1l);
+		String productName = productMap.get("name").toString();
+		order.setProductName(productName);
+
+		orderRepository.save(order);
+
 		//Enivar para Payment Integration
 		log.info(MessageFormat.format("[EXTERNO] Enviando mensagem do pedido {0} para o Payment Integration confirmar o pagamento.", 100));
 	}
@@ -79,7 +80,7 @@ public class OrderService extends GenericService<Order, Long, IOrderRepository> 
 			PaymentConfirmation payment = mapper.readValue(confirmation, PaymentConfirmation.class);
 
 			//Atualizar a order com a aprovação.
-			Order order = orderRepository.getReferenceById(payment.getOrderId());			
+			Order order = orderRepository.getById(payment.getOrderId());			
 			order.setAprovetAt(LocalDateTime.now());
 			order.setStatus(2);
 			

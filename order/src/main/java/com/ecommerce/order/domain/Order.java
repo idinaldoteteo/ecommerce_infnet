@@ -51,6 +51,10 @@ public class Order {
 	
 	private String transportName;
 	
+	private String clientName;
+	
+	private String productName;
+	
 	@OneToMany(mappedBy = "order", fetch = FetchType.EAGER , cascade = CascadeType.REMOVE, orphanRemoval = true)
 	protected Set<OrderItem> orderItems = new HashSet<>();
 	
