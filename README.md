@@ -12,6 +12,12 @@ Projeta um desenho arquitetural de microsserviços para um e-commerce, identific
 3) Rota para confirmar o pagamento: http://localhost:8088/api/order/confirmation_payment
 4) Rota para confirmar o aceite do pedito pela transportadora: http://localhost:8088/api/order/confirmation_delivery
 
+# Portas dos Microsserviços:
+* USER: http://localhost:8082/api
+* PRODUCT: http://localhost:8083/api
+* NOTIFICATION: http://localhost:8086/api
+* DELIVERY: http://localhost:8087/api
+* ORDER: http://localhost:8088/api
 
 # :hammer: Funcionalidades do projeto
 [funcionalidade do front-end] Realizar o acesso do User (usuário) ao um ecommerce, no qual fará o seu cadastro pelo **microsserviço User** e seguirá para tela de compra de produtos utilizando o **microsserviço Product**.
