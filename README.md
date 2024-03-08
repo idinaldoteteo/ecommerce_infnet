@@ -7,7 +7,9 @@ Projeta um desenho arquitetural de microsserviços para um e-commerce, identific
 
 # 🛠️ Abrir e rodar o projeto
 
-> :construction: Projeto em construção :construction:
+1) Para criar o pedido, rota: http://localhost:8088/api/order/create
+2) Para confirmar o pagamento, rota: http://localhost:8088/api/order/confirmation_payment
+3) Para confirmar o aceite do pedito pela transportador, rota: http://localhost:8088/api/order/confirmation_delivery
 
 
 # :hammer: Funcionalidades do projeto
